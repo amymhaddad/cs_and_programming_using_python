@@ -71,5 +71,19 @@
 # print('numVowels is: ' + str(numVowels))
 # print('numCons is: ' + str(numCons)) 
 
-for num in range(2, 12, 2):
-    print(num)
+# num = 10
+# print('Hello')
+
+# while num >= 2:
+#     print(num)
+#     num -= 2
+#     break
+ 
+count = 0
+phrase = "hello, world"
+for iteration in range(5):
+    index = 0
+    while index < len(phrase):
+        count += 1
+        index += 1
+    print("Iteration " + str(iteration) + "; count is: " + str(count))
