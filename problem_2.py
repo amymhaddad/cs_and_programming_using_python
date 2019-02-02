@@ -1,13 +1,15 @@
 
 
-x = 'azcbobobegghakl'
+# x = 'azcbobobegghakl'
 
-count = 0
+# count = 0
 
-for i, letter in enumerate(x):
-    if x[i:i+3] == 'bob':
-        count += 1
+# for i, letter in enumerate(x):
+#     if x[i:i+3] == 'bob':
+#         count += 1
     
-print(count)
+# print(count)
 
+x = 'boba'
 
+print(len(x))
