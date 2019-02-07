@@ -6,13 +6,7 @@
 # else:
 #     print(f"{x} is not 1.0")
 
-num = 0
+grocery = ['milk', 'ham', 'bread']
 
-while num <= 10:
-    print(num)
-    num += 2
-
-
-print("goodbye")
-
-
+for i, item in enumerate(grocery):
+    print(i, item)
