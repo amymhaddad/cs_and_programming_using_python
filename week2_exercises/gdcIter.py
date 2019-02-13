@@ -1,4 +1,6 @@
 
+#Write an iterative function that finds the greatest common divisor of 2 positive integers.
+
 a = 8
 b = 12
 test_val = 0
