@@ -1,5 +1,5 @@
 
-char = 'e'
+char = 'r'
 aStr = 'abctz'
 
 
@@ -8,48 +8,28 @@ def isIn(char, aStr):
         high = len(aStr) - 1
         mid = (low + high) // 2
 
-        if char == aStr[mid]:
-                return True
+        if len(aStr) == 1 and char != aStr[mid]:
+                return False
+        elif char == aStr[mid]:
+                return True        
         
         else: 
                 if aStr[mid] > char:
                         high = mid
-                        aStr = aStr[:high+1]
         
                 else:
                         low = mid
-                        aStr = aStr[low:]
-                        
-                mid = (low + high) // 2 
-                return isIn(char, aStr)
+                return isIn(char, aStr[low:high])
         
 print(isIn(char, aStr))
 
+#Think: when will string contain the letter?
+#At some point we will have exhausted our options and the string will be size 1 and not = to test character. Therefore, return False
+
+#I originaly recalled mid, but I don't need to do that because it's set as a local variable.
 
 
-# aStr = 'apple'
-# aStr = "".join(sorted(aStr))
-# char = 'a'
-
-# def isIn(char, aStr):
-#     low = 0
-#     high = len(aStr) - 1
-#     index = (low + high) // 2
-#     mid_value = aStr[index]
-
-#     if char == mid_value:
-#         return True
-#     else:
-#         if mid_value > char:
-#             high = aStr.index(mid_value)
-#             print(high)
-#         elif mid_value < char:
-#             low = aStr.index(mid_value)
-#             print(low)
-#         index = (low + high) // 2
-
-        
-#         return isIn(char, aStr[low:high])
-#     #i was sending in an index of 1 character aStr[index], but I need to pass in a string aStr[low:high]
-# x = isIn(char, aStr)
-# print(x)
+#Divide into 3 subproblems: 
+#Test1: if char != mid and len(aStr) == 1 --->return F
+#Test2: if char==aStr[mid] ---> return T
+#Test2: Recursively calling a smaller problem
