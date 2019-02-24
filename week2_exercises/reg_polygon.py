@@ -3,11 +3,8 @@ import math
 from decimal import Decimal
 
 def polysum(n, s):
-    sides_squared = math.pow(s, 2)
-    tan = math.tan
-    pi = math.pi
 
-    area = (0.25 * n * sides_squared) / tan(pi / n)
+    area = (0.25 * n * s**2 ) / math.tan (math.pi / n)
     perimeter = s * n
     square_perimeter = math.pow(perimeter, 2)
     total = area + square_perimeter
@@ -17,4 +14,4 @@ def polysum(n, s):
 
     return float(decimal_output)
 
-print(polysum(87, 84))
+print(polysum(4, 2))
