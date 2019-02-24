@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 for iteration in range(5):
     count = 0
     while True:
