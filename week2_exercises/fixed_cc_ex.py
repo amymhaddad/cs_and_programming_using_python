@@ -16,6 +16,7 @@ def debt_payoff(balance, annualInterestRate):
     else:
         monthly_payment_multiple_of_ten = monthly_payment
     
+    
     for month in range(13):
         monthly_unpaid_balance = balance - monthly_payment_multiple_of_ten    
         monthly_interest_rate = (annualInterestRate) / 12.0
@@ -26,9 +27,9 @@ def debt_payoff(balance, annualInterestRate):
 
         if balance <= 0:
             break
-        else:
-            remaining_balance = (monthly_payment_multiple_of_ten + balance) / 12
-            print(remaining_balance)
+    if balance > 0:
+        remaining_balance = (monthly_payment_multiple_of_ten + balance) / 12
+        print(remaining_balance)
         #     monthly_payment_multiple_of_ten = monthly_payment_multiple_of_ten + remaining_balance
 
 
