@@ -1,48 +1,35 @@
 
-import math
 
-# def debt_payoff(balance, annualInterestRate):
+#monthly_payment is not passed into this function
+def calculate_ending_balance(balance, annualInterestRate, monthly_payment):
 
-balance = 3329
-annualInterestRate = 0.2
+    month = 1
+    while month <= 12:
+        unpaid_balance = balance - monthly_payment
+        monthly_interest_rate = annualInterestRate / 12.0
+        new_balance = unpaid_balance + (monthly_interest_rate * unpaid_balance)
 
+        month += 1
+        balance = new_balance
+
+    ending_balance = round(balance, 2)
+    final_output = "Remaining balance: " + str(ending_balance)
+    return ending_balance
 
 
 def debt_payoff(balance, annualInterestRate):
-    month = 1
-    monthly_payment = balance / 12
-    if monthly_payment % 2 != 0:
-        monthly_payment_multiple_of_ten = (monthly_payment // 10) * 10 + 10
-    else:
-        monthly_payment_multiple_of_ten = monthly_payment
-    
-    
-    for month in range(13):
-        monthly_unpaid_balance = balance - monthly_payment_multiple_of_ten    
-        monthly_interest_rate = (annualInterestRate) / 12.0
-        
-        new_balance = monthly_unpaid_balance + (monthly_interest_rate * monthly_unpaid_balance)   
-        balance = new_balance
-        month += 1
 
-        if balance <= 0:
-            break
-    if balance > 0:
-        remaining_balance = (monthly_payment_multiple_of_ten + balance) / 12
-        print(remaining_balance)
-        #     monthly_payment_multiple_of_ten = monthly_payment_multiple_of_ten + remaining_balance
+    ending_balance = balance
+    monthly_payment = 0
 
+    while ending_balance > 0:
+        #calling the lower-level function inside this higher-level function in order find the total ending balance after 12 months.  
+        #The order of incrementing the monthly payment and calling ending balance matter!
+        #The way it is now, I increment the monthly payment, THEN call the function. Otherwise I call the function, which could get me the result I need, then I add 10 to it
+        monthly_payment += 10 
+        ending_balance = calculate_ending_balance(balance, annualInterestRate, monthly_payment)
 
-#HERE for updating the remaining balance and adding this balance to the monthly payment, make this monthly payment a multiple of 10 and see when balance is 0 (break)
- 
-    return monthly_payment_multiple_of_ten
+    return monthly_payment
 
-print(debt_payoff(balance, annualInterestRate))
-
-
-# print(debt_payoff(3329, 0.2))
-#lowest payment = 310
-
-
-# Updated balance each month = (Monthly unpaid balance) + (Monthly interest rate x Monthly unpaid balance)
-
+monthly_payment = debt_payoff(3329, .2)
+print(monthly_payment)
