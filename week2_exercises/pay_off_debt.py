@@ -1,6 +1,8 @@
+
+
 def debt_payoff(balance, annualInterestRate, monthlyPaymentRate):
-    month = 1
     
+    month = 1
     while month <= 12 :
         monthly_payment = balance * monthlyPaymentRate
         unpaid_balance = balance - monthly_payment
@@ -14,3 +16,5 @@ def debt_payoff(balance, annualInterestRate, monthlyPaymentRate):
     final_output = "Remaining balance: " + str(rounded_balance)
     return final_output
 
+debt_payoff(1000, .2, 10) # 200
+debt_payoff(1000, .2, 20) # 200
