@@ -5,7 +5,6 @@ import math
 def calculate_end_balance(balance, annualInterestRate, payment):
     month = 1
     while month <= 12:
-        # import pdb; pdb.set_trace()
         monthly_interest_rate = (annualInterestRate) / 12.0
         monthly_unpaid_balance = balance - payment
         new_balance = (monthly_unpaid_balance) + (monthly_interest_rate * monthly_unpaid_balance)
@@ -19,30 +18,29 @@ def calculate_end_balance(balance, annualInterestRate, payment):
 
 def monthly_payment(balance, annualInterestRate):
 
-    monthly_interest_rate = (annualInterestRate) / 12.0
+    monthly_interest_rate = annualInterestRate / 12.0
     lowest_payment = balance / 12
     highest_payment = (balance * (1 + monthly_interest_rate) ** 12) / 12.0
-    payment = (lowest_payment + highest_payment) // 2
 
     ending_balance = balance
      
-    while ending_balance >= 0:
+    #Use while True, which keeps the loop running. THis is a better option than while ending_balance >= 0 b/c t
+    #It's repetitive with the condition below: ending_balance <= 0
+    while True:
+        payment = (lowest_payment + highest_payment) // 2
+        ending_balance = calculate_end_balance(balance, annualInterestRate, payment)
+        print(ending_balance)
 
         if ending_balance <= 0:
             # return payment
-            break
+            return payment
         else:
             if ending_balance > 0:
-                highest_payment = payment
-            else:
                 lowest_payment = payment
-        
-        # payment = (lowest_payment + highest_payment) // 2
-        ending_balance = calculate_end_balance(balance, annualInterestRate, payment)
-    
-    return payment
+            else:
+                highest_payment = payment
 
-print(monthly_payment(320000, .2))
+monthly_payment(320000, .2)
 
 #Why isn't 2nd function iterating through each ending_balance?
 
