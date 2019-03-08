@@ -7,9 +7,11 @@ animals = {
     'd': ['donkey', 'dog', 'dingo'],
 }
 
-count = 0 
-for anim in animals:
-    len_values = len(animals[anim])
-    print(len_values)
-    count += len_values
-return count
+def how_many(aDict):
+    count = 0 
+    for anim in animals:
+        len_values = len(animals[anim])
+        count += len_values
+    return count
+
+print(how_many(animals))
