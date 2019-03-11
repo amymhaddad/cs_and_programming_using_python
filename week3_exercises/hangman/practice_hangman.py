@@ -4,16 +4,17 @@ import string
 WORDLIST_FILENAME = "words.txt"
 
 lettersGuessed = []
+guesses = 0
 
 def loadWords():
     print("Loading word list from file...")
-
+    
     with open(WORDLIST_FILENAME) as f_object:
         contents = f_object.readline() 
     wordlist = contents.split()
     print(" ", len(wordlist), "words loaded.")
-    
-    return contents
+
+    return wordlist
 
 wordlist = loadWords()
 
@@ -38,7 +39,6 @@ def getGuessedWord(secretWord, lettersGuessed):
             new_string += '_' + ' '
     return new_string 
 
-
 def getAvailableLetters(lettersGuessed):
     alphabet = set(string.ascii_lowercase)
     guessed_letters = set(lettersGuessed)
@@ -52,7 +52,8 @@ def guess_a_letter():
 
     guess_one_letter = input("Please guess a letter: ")
     guess_in_lowercase = guess_one_letter.lower()
-    lettersGuessed.append(guess_in_lowercase)
+    lettersGuessed.append(guess_in_lowercase) 
+
     get_guessed_word = getGuessedWord(secretWord, lettersGuessed)
 
     if guess_in_lowercase not in secretWord:
@@ -63,9 +64,8 @@ def guess_a_letter():
         result = (f"Good guess: {get_guessed_word}")
     return result
 
-
 def hangman(secretWord):
-    global lettersGuessed
+    global guesses 
     word_length = len(secretWord)
     available_letters = getAvailableLetters(lettersGuessed)
     
@@ -84,6 +84,7 @@ def hangman(secretWord):
         elif completed_word == secretWord:
             print("Congratulations, you won!")
             break
+        
         else:
             print(f"Available letters: {available_letters}")
             print(guess_a_letter())
