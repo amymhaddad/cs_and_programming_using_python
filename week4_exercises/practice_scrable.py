@@ -21,8 +21,8 @@ def loadWords():
     print("  ", len(wordList), "words loaded.")
     return wordList
 
-word = 'bread'
-n = 5
+word = 'waybill'
+n = 7
 
 # def getFrequencyDict(sequence):
 #     """
@@ -38,17 +38,36 @@ n = 5
 
 def getWordScore(word, n):
     valid_word = loadWords()
-    assert word in valid_word
-
     word_score = 0
-    for letter in word:
-        word_score += SCRABBLE_LETTER_VALUES[letter]
-    return word_score
 
+    if word not in valid_word:
+        return word_score
+    
+    else:
+        
+        for letter in word:
+            word_score += (SCRABBLE_LETTER_VALUES[letter]) * len(word)
+        if len(word) == n:
+            word_score += 50
+        
 
+    return word_score 
 
+def displayHand(hand):
+    """
+    Displays the letters currently in the hand.
 
+    For example:
+    >>> displayHand({'a':1, 'x':2, 'l':3, 'e':1})
+    Should print out something like:
+       a x x l l l e
+    The order of the letters is unimportant.
 
+    hand: dictionary (string -> int)
+    """
+    for letter in hand.keys():
+        for j in range(hand[letter]):
+             print(letter,end=" ")       # print all on the same line
+    print()                             # print an empty line
 
-print(getWordScore(word, n))
 
