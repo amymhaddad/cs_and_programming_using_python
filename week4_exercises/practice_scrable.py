@@ -11,6 +11,9 @@ SCRABBLE_LETTER_VALUES = {
 
 WORDLIST_FILENAME = "words.txt"
 
+word = 'apple'
+n = 7
+
 def loadWords():
     print("Loading word list from file...")
 
@@ -21,19 +24,48 @@ def loadWords():
     print("  ", len(wordList), "words loaded.")
     return wordList
 
-sequence = 'wayybill'
-n = 7
 
-def getFrequencyDict(sequence):
-    """
-    sequence: string or list
-    return: dictionary of number of times each letter occurs in the given sequence
-    """
-    freq = {}
-    for x in sequence:
-        freq[x] = freq.get(x,0) + 1
-    return freq
 
+#deals a hand of random vowels and constanents
+#Pass in "n" which is the number of letters to generate for the hand, which consists of V's and C's
+def dealHand(n):
+    hand={}
+    numVowels = n // 3
+    
+    for i in range(numVowels):
+        x = VOWELS[random.randrange(0,len(VOWELS))]
+        hand[x] = hand.get(x, 0) + 1
+        
+    for i in range(numVowels, n):    
+        x = CONSONANTS[random.randrange(0,len(CONSONANTS))]
+        hand[x] = hand.get(x, 0) + 1
+    return hand
+
+hand = dealHand(n)
+
+#displays hand with spaces between each letter: w a y b i l l 
+#Need to use dealHand as a helper function in displayHand. This is why we set it to a variable and pass it into displayHand.
+#We are taking the dictionary that results from dealHand and displaying it in the function bel0w.
+def displayHand(hand):
+    updateHand(hand, word)
+    for letter in hand.keys():
+        for j in range(hand[letter]):
+             print(letter,end=" ")        
+    print()                         
+
+user_hand = displayHand(hand)
+
+
+#getFrequencyDict takes in a string, so pass in display_hand
+#shows frequency of each letter that occurs in a hand
+# def getFrequencyDict(sequence):
+#     sequence = displayHand(hand)
+#     freq = {}
+#     for x in sequence:
+#         freq[x] = freq.get(x,0) + 1
+#     return freq
+
+# print(getFrequencyDict(user_hand))
 
 def getWordScore(word, n):
     valid_word = loadWords()
@@ -50,46 +82,14 @@ def getWordScore(word, n):
     return word_score 
 
 
-
-#displays hand with spaces between each letter: w a y b i l l 
-def displayHand(hand):
-    hand = getFrequencyDict(sequence)
-
-    for letter in hand.keys():
-        for j in range(hand[letter]):
-             print(letter,end=" ")        
-    print()                         
-    
-
-#returns random vowels and constanents
-def dealHand(n):
-
-    #iterate through the number of vowels (based on calc from numbVowels).
-    for i in range(numVowels):
-        vowel = VOWELS[random.randrange(0,len(VOWELS))]
-        hand[vowel] = hand.get(vowel, 0) + 1
-
-    #start with numVowels and end at "n". This will determine the number of constants we need.
-    for i in range(numVowels, n): 
-        constanant = CONSONANTS[random.randrange(0,len(CONSONANTS))]
-        hand[constanant] = hand.get(constanant, 0) + 1
-
-    return hand
-
-
 def updateHand(hand, word):
-    #1. make sure displayHand and dealHand work 
-    #2. Call dealHand in this function
-    #3. Write out this fucntion
+    copy_dict = hand.copy()
+    for letter in word:
+        for key, value in copy_dict.items():
+            if letter in key:
+                copy_dict[key] = value -1
+        
+    return copy_dict
 
-   
-    # Aim: create a word, remove letters from hand, and return leftover letters
-    # try using set
-
-    #given a hand (ie, a dictionary)
-    #given a word (ie, a string)
-    #This function uses the letters from "hand" to spell a word --->This is the algo I write
-    ###make a copy of hand 
-    ### extract letters in "word" from "copied_hand"  -->ie, delete these values --> return leftover values
-
-    #Returns a COPY of hand with only the remaining letters 
+print(updateHand(hand, word))
+        
