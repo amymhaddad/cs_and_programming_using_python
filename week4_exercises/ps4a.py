@@ -141,13 +141,13 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    copy_dict = hand.copy()
+    hand_copy = hand.copy()
     for letter in word:
-        for key, value in copy_dict.items():
-            if letter in key:
-                copy_dict[key] = value -1
+        for dict_letter, frequency in hand_copy.items():
+            if letter == dict_letter:
+                hand_copy[dict_letter] = frequency -1
         
-    return copy_dict
+    return hand_copy
 
 
 def isValidWord(word, hand, wordList):
@@ -162,33 +162,20 @@ def isValidWord(word, hand, wordList):
     wordList: list of lowercase strings
     """
     wordList = loadWords()
-    copy_dict = hand.copy()
-
-
-
+    hand_copy = hand.copy()
 
     for letter in word:
         if letter not in hand.keys():
             return False
         else:
-            for key, value in copy_dict.items():
-                if letter in key:
-                    copy_dict[key] = value -1
-            for value in copy_dict.values():
-                if value < 0:
-                    return False
-                return True
+            for dict_letter, frequency in hand_copy.items():
+                if letter == dict_letter:
+                    hand_copy[dict_letter] = frequency -1        
+            for frequency in hand_copy.values():
+                if frequency < 0:
+                    return False    
+    return True
 
-    
-# isValidWord(word, hand, wordList)
-
-
-
-
-
-#
-# Problem #4: Playing a hand
-#
 
 def calculateHandlen(hand):
     """ 
@@ -197,8 +184,8 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
-
+    hand = dealHand(n)
+    return sum([frequency for frequency in hand.values()])
 
 
 def playHand(hand, wordList, n):
