@@ -261,15 +261,7 @@ def playHand(hand, wordList, n):
     #need break to exit the loop 
             
       
-
-wordList = loadWords()
-playHand({'w':1, 's':1, 't':2, 'a':1, 'o':1, 'f':1}, wordList, 7)
-
-#
-# Problem #5: Playing a game
-# 
-
-def playGame(wordList):
+def playGame(words):
     """
     Allow the user to play an arbitrary number of hands.
 
@@ -281,15 +273,41 @@ def playGame(wordList):
  
     2) When done playing the hand, repeat from step 1    
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    # print("playGame not yet implemented.") # <-- Remove this line when you code the function
-   
+    count_games = 0
+
+    while True:
+        user_game_choice = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+
+        if user_game_choice == 'e':
+            break
+
+        elif count_games == 0 and user_game_choice == 'r':
+            print("You have not played a hand yet. Please play a new hand first!\n")
+            count_games += 1
+        
+        elif (count_games > 0 and user_game_choice == 'n') or (user_game_choice == 'n'):
+            new_hand = dealHand(HAND_SIZE)
+            play_hand = playHand(new_hand, wordList, HAND_SIZE)
+            count_games += 1
+            print("\n")
+            
+                
+        elif count_games > 1 and user_game_choice == 'r':
+            print(play_hand)
+            count_games += 1
+        
+        else:
+            # if user_game_choice != 'n' and user_game_choice != 'r' and user_game_choice != 'e': 
+            print("Invalid command. Try again")
+            print("\n")
+
+wordList = loadWords()
+(playGame(wordList))
 
 
 
-#
-# Build data structures used for entire session and play game
-#
-if __name__ == '__main__':
-    wordList = loadWords()
-    playGame(wordList)
+
+
+
+
+        
