@@ -275,9 +275,10 @@ def playGame(words):
     """
     count_games = 0
 
+
     while True:
         user_game_choice = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
-
+       
         if user_game_choice == 'e':
             break
 
@@ -286,28 +287,18 @@ def playGame(words):
             count_games += 1
         
         elif (count_games > 0 and user_game_choice == 'n') or (user_game_choice == 'n'):
-            new_hand = dealHand(HAND_SIZE)
-            play_hand = playHand(new_hand, wordList, HAND_SIZE)
+            current_hand = dealHand(HAND_SIZE)
+            playHand(current_hand, wordList, HAND_SIZE)
             count_games += 1
             print("\n")
-            
-                
+    
         elif count_games > 1 and user_game_choice == 'r':
-            print(play_hand)
+            playHand(current_hand, wordList, HAND_SIZE)
             count_games += 1
         
         else:
-            # if user_game_choice != 'n' and user_game_choice != 'r' and user_game_choice != 'e': 
             print("Invalid command. Try again")
             print("\n")
 
 wordList = loadWords()
 (playGame(wordList))
-
-
-
-
-
-
-
-        

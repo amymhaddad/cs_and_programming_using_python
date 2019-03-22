@@ -127,7 +127,7 @@ def playGame(wordList):
     while True:
         game_type_choice = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
         game_type_choice_options = ['n', 'r', 'e']
-        game_opponent_input = input("Enter u to have yourself play, c to have the computer play: ")
+        valid_game_type_choice = (game_type_choice == 'n') or (game_type_choice == 'r' and count_games > 0) or (count_games > 0 and game_type_choice == 'n')
         game_opponent_options = ['c', 'u']
 
         if game_type_choice == 'e':
@@ -141,49 +141,33 @@ def playGame(wordList):
             print("You have not played a hand yet. Please play a new hand first!\n")
             count_games += 1
 
-        else: 
-            if (game_opponent_input in game_opponent_options) and (count_games > 0 and game_type_choice == 'n') or (game_type_choice == 'n') or (game_type_choice == 'r' and count_games > 0):
+        while valid_game_type_choice:
+            game_opponent_input = input("Enter u to have yourself play, c to have the computer play: ")
+            count_games += 1
 
+            if game_opponent_input == 'u' and game_type_choice == 'n':
+                current_hand = dealHand(HAND_SIZE)
+                playHand(current_hand, wordList, HAND_SIZE)
+                print("\n")
+                break
 
-            # if (count_games > 0 and game_type_choice == 'n') or (game_type_choice == 'n') or (game_type_choice == 'r' and count_games > 0):
-                # game_opponent_input = input("Enter u to have yourself play, c to have the computer play: ")
-                # game_opponent_options = ['c', 'u']
-                
-                if game_opponent_input == 'u':
-                    if (count_games > 0 and game_type_choice == 'n') or (game_type_choice == 'n'):
-                        current_hand = dealHand(HAND_SIZE)
-                        playHand(current_hand, wordList, HAND_SIZE)
-                        count_games += 1
-                        print("\n")
-
-                    elif (count_games > 1) and (game_type_choice == 'r'):
-                        playHand(current_hand, wordList, HAND_SIZE)
-                        count_games += 1
-                    
-                elif game_opponent_input == 'c':
-                    if (count_games > 0 and game_type_choice == 'n') or (game_type_choice == 'c'):
-                        current_hand = dealHand(HAND_SIZE)
-                        compPlayHand(current_hand, wordList, HAND_SIZE)
-                        count_games += 1
-                        print("\n")
-                    
-                    elif (count_games > 1) and (game_type_choice == 'r'):
-                        compPlayHand(current_hand, wordList, HAND_SIZE)
-                        count_games += 1
+            elif game_opponent_input == 'u' and game_type_choice == 'r':
+                playHand(current_hand, wordList, HAND_SIZE)
+                break
+    
+            elif game_opponent_input == 'c' and game_type_choice == 'n':
+                current_hand = dealHand(HAND_SIZE)
+                compPlayHand(current_hand, wordList, HAND_SIZE)
+                print("\n")
+                break
             
-            else:
-                if game_opponent_input not in game_opponent_options:
+            elif game_opponent_input == 'c' and game_type_choice == 'r':
+                compPlayHand(current_hand, wordList, HAND_SIZE)
+                break
+                   
+            elif game_opponent_input not in game_opponent_options:
                     print("Invalid command. Try again")
                     print("\n")
-                elif game_opponent_input == 'e':
-                    break
-
-#need to get game_opponent_input to repeat IF not given proper input 
-
-
-
-
-
 
 # if __name__ == '__main__':
 wordList = loadWords()
