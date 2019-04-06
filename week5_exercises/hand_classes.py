@@ -92,8 +92,8 @@ class Hand(object):
                 new_hand[word[i]] = new_hand.get(word[i]) -1             
             if new_hand[word[i]] < 0:
                 return False
-        return True
         self.hand = new_hand
+        return True
                       
 
 myHand = Hand(7)
