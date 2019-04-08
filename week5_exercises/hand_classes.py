@@ -87,16 +87,15 @@ class Hand(object):
         for i, letter in enumerate(word):
             if word[i] not in new_hand.keys():
                 return False
-            
+            elif new_hand[word[i]] > 0:
+                new_hand[word[i]] = new_hand.get(word[i]) -1    
             else:
-                new_hand[word[i]] = new_hand.get(word[i]) -1             
-            if new_hand[word[i]] < 0:
                 return False
-        self.hand = new_hand
-        return True
-                      
+            self.hand = new_hand
+            return True
 
+       
 myHand = Hand(7)
 
 myHand.setDummyHand('applele')
-print(myHand.update('apple'))
+print(myHand.update('za'))
