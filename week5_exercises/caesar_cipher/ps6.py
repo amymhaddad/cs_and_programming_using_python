@@ -1,4 +1,5 @@
-from string import ascii_uppercase as upper, ascii_lowercase as lower 
+from string import ascii_uppercase as upper, ascii_lowercase as lower
+
 import string
 import random
 
@@ -127,20 +128,15 @@ class Message(object):
         Returns: the message text (string) in which every character is shifted
              down the alphabet by the input shift
         '''
-        # self.build_shift_dict(shift)
-        # copy_dict = self.build_shift_dict(shift).copy()
-
-        # encrypted_message = ''
-        # for word in self.message_text.split(" "):
-        #     for letter in word:
-        #         new_letter = copy_dict.get(letter)
-        #         encrypted_message += new_letter
-        # print(encrypted_message)
-        
+        total_letters = lower + upper
+        build_dictionary = self.build_shift_dict(shift)
        
         encrypted_message = ''
         for letter in self.message_text:
-                new_letter = self.build_shift_dict(shift).get(letter)
+            if letter not in total_letters:
+                encrypted_message += letter
+            else: 
+                new_letter = build_dictionary.get(letter)
                 encrypted_message += new_letter
         return encrypted_message
 
@@ -161,6 +157,7 @@ class PlaintextMessage(Message):
         Hint: consider using the parent class constructor so less 
         code is repeated
         '''
+
         def __init__(self, text, shift):
             super().__init__(text)
             self.message_text = text
@@ -212,12 +209,13 @@ class PlaintextMessage(Message):
 
 
 class CiphertextMessage(Message):
+    default_shift_value = 26
+
     def __init__(self, text):
         super().__init__(text)
         self.message_text = text
         self.valid_words = load_words(WORDLIST_FILENAME)
-        self.shift = 26
-
+      
         '''
         Initializes a CiphertextMessage object
                 
@@ -248,18 +246,18 @@ class CiphertextMessage(Message):
         number_valid_words = 0
         test_word = []
         valid_decrypted_word = []
-        shift_vals = []
-        # best_shift = {}
-       
-        combined_word_shift_wordcount = ()
+        shift_vals = 0
+        
+        current_shift = self.__class__.default_shift_value
     
-        while self.shift > 0:
-            decoded_letters = self.apply_shift(self.shift - 1)
+        while current_shift > 0:            
+            decoded_letters = self.apply_shift(current_shift)
+
             if decoded_letters in self.valid_words:
                 valid_decrypted_word.append(decoded_letters)
-                shift_vals.append(self.shift)             
-            self.shift -= 1
-        return (shift_vals, "".join(valid_decrypted_word))
+                shift_vals += current_shift           
+            current_shift -= 1
+        return (current_shift, "".join(valid_decrypted_word))
     
 
 #Example test case (PlaintextMessage)
@@ -273,10 +271,11 @@ class CiphertextMessage(Message):
 ciphertext = CiphertextMessage('jgnnq')
 print(ciphertext.decrypt_message())
 # print('Expected Output:', (24, 'hello'))
-print('Actual Output:', ciphertext.decrypt_message())
+# print('Actual Output:', ciphertext.decrypt_message())
 
 # story_file = get_story_string()
 
 # story = CiphertextMessage(story_file)
 # print(story.decrypt_message())
+
 
